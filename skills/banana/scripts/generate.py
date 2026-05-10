@@ -5,12 +5,15 @@ import argparse
 import base64
 import json
 import os
+import subprocess
 import sys
 import time
 import urllib.request
 import urllib.error
 from datetime import datetime
 from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).parent
 
 # ── Gemini ────────────────────────────────────────────────────────────────────
 GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
@@ -248,6 +251,39 @@ def generate_kie(args):
             "task_id": task_id}
 
 
+# ── cost helpers ─────────────────────────────────────────────────────────────
+
+def _lookup_price(model, resolution):
+    """Return estimated cost per image in USD."""
+    import importlib.util, sys as _sys
+    spec = importlib.util.spec_from_file_location(
+        "cost_tracker", SCRIPT_DIR / "cost_tracker.py"
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.lookup_price(model, resolution)
+
+
+def _print_cost(model, resolution, backend):
+    try:
+        price = _lookup_price(model, resolution)
+        print(f"  💰 Est. cost: ~${price:.3f}  ({backend} / {model} / {resolution})", file=sys.stderr)
+    except Exception:
+        pass
+
+
+def _log_cost(model, resolution, backend, prompt):
+    try:
+        subprocess.run(
+            [sys.executable, str(SCRIPT_DIR / "cost_tracker.py"),
+             "log", "--model", model, "--resolution", resolution,
+             "--prompt", prompt[:80]],
+            capture_output=True,
+        )
+    except Exception:
+        pass
+
+
 # ── CLI ───────────────────────────────────────────────────────────────────────
 
 def main():
@@ -266,11 +302,15 @@ def main():
     parser.add_argument("--image-only", action="store_true", help="[gemini] Image-only output")
     args = parser.parse_args()
 
+    effective_model = args.model or (KIE_DEFAULT_MODEL if args.backend == "kie" else GEMINI_DEFAULT_MODEL)
+    _print_cost(effective_model, args.resolution, args.backend)
+
     if args.backend == "kie":
         result = generate_kie(args)
     else:
         result = generate_gemini(args)
 
+    _log_cost(effective_model, args.resolution, args.backend, args.prompt)
     print(json.dumps(result, indent=2))
 
 

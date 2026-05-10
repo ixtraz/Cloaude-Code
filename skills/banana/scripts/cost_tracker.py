@@ -11,10 +11,31 @@ from pathlib import Path
 LEDGER_PATH = Path.home() / ".banana" / "costs.json"
 
 PRICING = {
+    # Gemini direct
     "gemini-3.1-flash-image-preview": {"512": 0.020, "1K": 0.039, "2K": 0.078, "4K": 0.156},
     "gemini-2.5-flash-image":         {"512": 0.020, "1K": 0.039, "2K": 0.078, "4K": 0.156},
+    # kie.ai models (flat per image, resolution-independent unless noted)
+    "nano-banana-pro":   {"512": 0.090, "1K": 0.090, "2K": 0.100, "4K": 0.120},
+    "nano-banana-2":     {"512": 0.020, "1K": 0.039, "2K": 0.078, "4K": 0.078},
+    "flux-kontext-pro":  {"512": 0.040, "1K": 0.040, "2K": 0.050, "4K": 0.050},
+    "flux-kontext-dev":  {"512": 0.025, "1K": 0.025, "2K": 0.030, "4K": 0.030},
+    "4o-image":          {"512": 0.040, "1K": 0.040, "2K": 0.080, "4K": 0.160},
+    "midjourney":        {"512": 0.030, "1K": 0.030, "2K": 0.050, "4K": 0.050},
+    "grok-imagine":      {"512": 0.030, "1K": 0.030, "2K": 0.040, "4K": 0.040},
+    "seedream":          {"512": 0.020, "1K": 0.020, "2K": 0.030, "4K": 0.030},
 }
 DEFAULT_PRICE = 0.039
+
+
+def lookup_price(model, resolution, batch=False):
+    """Returns estimated cost per image in USD."""
+    model_prices = None
+    for key in PRICING:
+        if key in model:
+            model_prices = PRICING[key]
+            break
+    price = (model_prices or {}).get(resolution, DEFAULT_PRICE)
+    return price * 0.5 if batch else price
 
 
 def load_ledger():
@@ -28,16 +49,6 @@ def save_ledger(ledger):
     LEDGER_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(LEDGER_PATH, "w") as f:
         json.dump(ledger, f, indent=2)
-
-
-def lookup_price(model, resolution, batch=False):
-    model_prices = None
-    for key in PRICING:
-        if key in model:
-            model_prices = PRICING[key]
-            break
-    price = (model_prices or {}).get(resolution, DEFAULT_PRICE)
-    return price * 0.5 if batch else price
 
 
 def cmd_log(args):
