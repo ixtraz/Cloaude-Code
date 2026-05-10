@@ -7,6 +7,30 @@
 
 This skill activates when the user runs any `/banana` command.
 
+## Backends
+
+Two generation backends are available, switchable via `--backend`:
+
+| Flag | Backend | Key env var | Best for |
+|------|---------|-------------|----------|
+| `--backend gemini` | Google Gemini API (direct) | `GOOGLE_AI_API_KEY` | Default; synchronous; free tier available |
+| `--backend kie` | [kie.ai](https://kie.ai/) unified proxy | `KIE_API_KEY` | Multiple model families; 30-80% cheaper; no free-tier quota issues |
+
+**kie.ai model options** (`--model`):
+
+| Model ID | Provider | Notes |
+|----------|----------|-------|
+| `nano-banana-pro` | Google Gemini 3 Pro | Default kie model; 4K, highest quality |
+| `nano-banana-2` | Google Gemini 2.5 Flash | Budget option |
+| `flux-kontext-pro` | Black Forest Labs | Strong subject/style consistency |
+| `flux-kontext-dev` | Black Forest Labs | Faster, slightly lower quality |
+| `4o-image` | OpenAI GPT-Image-1 | Excellent instruction following |
+| `midjourney` | Midjourney | Artistic / stylized |
+| `grok-imagine` | xAI | Image-to-image support |
+| `seedream` | Bytedance | Asian aesthetic, text in image |
+
+kie.ai uses an **async task pipeline**: submit → get `taskId` → poll until `succeed` → download image. The scripts handle this automatically.
+
 ## Pre-Flight Checklist
 
 Before generating ANY image, you MUST read:
@@ -58,12 +82,29 @@ Before calling the API, configure:
 ### Step 4: Generate via MCP (Primary Path)
 Call `gemini_generate_image` with the crafted prompt.
 
-**MCP fallback:** If MCP is not available, use `scripts/generate.py`:
+**Script fallback** (MCP unavailable or to select a different backend/model):
 ```bash
+# Gemini direct (default)
 python3 skills/banana/scripts/generate.py \
   --prompt "your prompt here" \
   --aspect-ratio 16:9 \
   --resolution 2K
+
+# kie.ai — Nano Banana Pro
+python3 skills/banana/scripts/generate.py \
+  --prompt "your prompt here" \
+  --aspect-ratio 16:9 \
+  --resolution 2K \
+  --backend kie \
+  --model nano-banana-pro
+
+# kie.ai — Flux.1 Kontext Pro
+python3 skills/banana/scripts/generate.py \
+  --prompt "your prompt here" \
+  --aspect-ratio 1:1 \
+  --resolution 2K \
+  --backend kie \
+  --model flux-kontext-pro
 ```
 
 ### Step 5: Post-Generation Response
