@@ -33,9 +33,11 @@ KIE_MODELS = [
     "flux-kontext-pro",     # Flux.1 Kontext Pro
     "flux-kontext-dev",     # Flux.1 Kontext Dev (faster)
     "4o-image",             # GPT-Image-1 / GPT-4o
+    "gpt-image-2",          # GPT Image 2 (reasoning-driven, up to 16 refs)
     "midjourney",           # Midjourney v7
     "grok-imagine",         # Grok Imagine (xAI)
-    "seedream",             # Bytedance Seedream
+    "seedream",             # Bytedance Seedream 4.x
+    "seedream-5-lite",      # Bytedance Seedream 5.0 Lite (~$0.035/img)
 ]
 
 # ── shared ────────────────────────────────────────────────────────────────────

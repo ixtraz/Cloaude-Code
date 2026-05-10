@@ -25,9 +25,11 @@ Two generation backends are available, switchable via `--backend`:
 | `flux-kontext-pro` | Black Forest Labs | Strong subject/style consistency |
 | `flux-kontext-dev` | Black Forest Labs | Faster, slightly lower quality |
 | `4o-image` | OpenAI GPT-Image-1 | Excellent instruction following |
+| `gpt-image-2` | OpenAI GPT Image 2 | Reasoning before generation, up to 16 refs, ~$0.05-0.19 |
 | `midjourney` | Midjourney | Artistic / stylized |
 | `grok-imagine` | xAI | Image-to-image support |
-| `seedream` | Bytedance | Asian aesthetic, text in image |
+| `seedream` | Bytedance Seedream 4.x | Asian aesthetic, text in image |
+| `seedream-5-lite` | Bytedance Seedream 5.0 Lite | Multimodal reasoning, web search grounding, ~$0.035 |
 
 kie.ai uses an **async task pipeline**: submit → get `taskId` → poll until `succeed` → download image. The scripts handle this automatically.
 

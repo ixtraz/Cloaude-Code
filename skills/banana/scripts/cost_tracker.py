@@ -20,9 +20,11 @@ PRICING = {
     "flux-kontext-pro":  {"512": 0.040, "1K": 0.040, "2K": 0.050, "4K": 0.050},
     "flux-kontext-dev":  {"512": 0.025, "1K": 0.025, "2K": 0.030, "4K": 0.030},
     "4o-image":          {"512": 0.040, "1K": 0.040, "2K": 0.080, "4K": 0.160},
+    "gpt-image-2":       {"512": 0.030, "1K": 0.050, "2K": 0.100, "4K": 0.190},
     "midjourney":        {"512": 0.030, "1K": 0.030, "2K": 0.050, "4K": 0.050},
     "grok-imagine":      {"512": 0.030, "1K": 0.030, "2K": 0.040, "4K": 0.040},
     "seedream":          {"512": 0.020, "1K": 0.020, "2K": 0.030, "4K": 0.030},
+    "seedream-5-lite":   {"512": 0.020, "1K": 0.035, "2K": 0.035, "4K": 0.035},
 }
 DEFAULT_PRICE = 0.039
 
@@ -30,7 +32,8 @@ DEFAULT_PRICE = 0.039
 def lookup_price(model, resolution, batch=False):
     """Returns estimated cost per image in USD."""
     model_prices = None
-    for key in PRICING:
+    # longest key first so "seedream-5-lite" matches before "seedream"
+    for key in sorted(PRICING, key=len, reverse=True):
         if key in model:
             model_prices = PRICING[key]
             break
