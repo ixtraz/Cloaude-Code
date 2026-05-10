@@ -38,6 +38,9 @@ KIE_MODELS = [
     "grok-imagine",         # Grok Imagine (xAI)
     "seedream",             # Bytedance Seedream 4.x
     "seedream-5-lite",      # Bytedance Seedream 5.0 Lite (~$0.035/img)
+    "wan2.7-image",         # Alibaba Wan 2.7 Image (up to 2K, 9 ref images)
+    "wan2.7-image-pro",     # Alibaba Wan 2.7 Image Pro (up to 4K, thinking mode)
+    "qwen-image-2",         # Alibaba Qwen Image 2.0 (native 2K, text rendering)
 ]
 
 # ── shared ────────────────────────────────────────────────────────────────────

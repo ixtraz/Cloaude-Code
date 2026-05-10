@@ -30,6 +30,9 @@ Two generation backends are available, switchable via `--backend`:
 | `grok-imagine` | xAI | Image-to-image support |
 | `seedream` | Bytedance Seedream 4.x | Asian aesthetic, text in image |
 | `seedream-5-lite` | Bytedance Seedream 5.0 Lite | Multimodal reasoning, web search grounding, ~$0.035 |
+| `wan2.7-image` | Alibaba Wan 2.7 Image | Up to 2K, 9 reference images, ~$0.037 |
+| `wan2.7-image-pro` | Alibaba Wan 2.7 Image Pro | Up to 4K, thinking mode, ~$0.040-0.070 |
+| `qwen-image-2` | Alibaba Qwen Image 2.0 | Native 2K, strong text rendering, ~$0.028-0.075 |
 
 kie.ai uses an **async task pipeline**: submit → get `taskId` → poll until `succeed` → download image. The scripts handle this automatically.
 
