@@ -21,7 +21,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Show cost estimate only")
     args = parser.parse_args()
 
-    price_per = {"512": 0.020, "1K": 0.039, "2K": 0.078, "4K": 0.156}.get(args.resolution, 0.039)
+    price_per = {"1K": 0.039, "2K": 0.078, "4K": 0.156}.get(args.resolution, 0.039)
     total_est = price_per * args.count
     print(f"Batch: {args.count} images @ ${price_per:.3f} each = ${total_est:.3f} estimated")
 

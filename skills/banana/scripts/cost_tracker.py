@@ -12,19 +12,19 @@ LEDGER_PATH = Path.home() / ".banana" / "costs.json"
 
 PRICING = {
     # Gemini direct
-    "gemini-3.1-flash-image-preview": {"512": 0.020, "1K": 0.039, "2K": 0.078, "4K": 0.156},
-    "gemini-2.5-flash-image":         {"512": 0.020, "1K": 0.039, "2K": 0.078, "4K": 0.156},
-    # kie.ai models (flat per image, resolution-independent unless noted)
-    "nano-banana-pro":   {"512": 0.090, "1K": 0.090, "2K": 0.100, "4K": 0.120},
-    "nano-banana-2":     {"512": 0.020, "1K": 0.039, "2K": 0.078, "4K": 0.078},
-    "flux-kontext-pro":  {"512": 0.040, "1K": 0.040, "2K": 0.050, "4K": 0.050},
-    "flux-kontext-dev":  {"512": 0.025, "1K": 0.025, "2K": 0.030, "4K": 0.030},
-    "4o-image":          {"512": 0.040, "1K": 0.040, "2K": 0.080, "4K": 0.160},
-    "gpt-image-2":       {"512": 0.030, "1K": 0.050, "2K": 0.100, "4K": 0.190},
-    "midjourney":        {"512": 0.030, "1K": 0.030, "2K": 0.050, "4K": 0.050},
-    "grok-imagine":      {"512": 0.030, "1K": 0.030, "2K": 0.040, "4K": 0.040},
-    "seedream":          {"512": 0.020, "1K": 0.020, "2K": 0.030, "4K": 0.030},
-    "seedream-5-lite":   {"512": 0.020, "1K": 0.035, "2K": 0.035, "4K": 0.035},
+    "gemini-3.1-flash-image-preview": {"1K": 0.039, "2K": 0.078, "4K": 0.156},
+    "gemini-2.5-flash-image":         {"1K": 0.039, "2K": 0.078, "4K": 0.156},
+    # kie.ai models
+    "nano-banana-pro":   {"1K": 0.090, "2K": 0.100, "4K": 0.120},
+    "nano-banana-2":     {"1K": 0.039, "2K": 0.078, "4K": 0.078},
+    "flux-kontext-pro":  {"1K": 0.040, "2K": 0.050, "4K": 0.050},
+    "flux-kontext-dev":  {"1K": 0.025, "2K": 0.030, "4K": 0.030},
+    "4o-image":          {"1K": 0.040, "2K": 0.080, "4K": 0.160},
+    "gpt-image-2":       {"1K": 0.050, "2K": 0.100, "4K": 0.190},
+    "midjourney":        {"1K": 0.030, "2K": 0.050, "4K": 0.050},
+    "grok-imagine":      {"1K": 0.030, "2K": 0.040, "4K": 0.040},
+    "seedream":          {"1K": 0.020, "2K": 0.030, "4K": 0.030},
+    "seedream-5-lite":   {"1K": 0.035, "2K": 0.035, "4K": 0.035},
 }
 DEFAULT_PRICE = 0.039
 
