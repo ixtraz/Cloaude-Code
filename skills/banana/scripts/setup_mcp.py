@@ -44,6 +44,11 @@ def get_gemini_key(args_key):
     key = os.environ.get("GOOGLE_AI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
     if key:
         return key
+    # re-use key already stored in settings
+    existing = load_settings()
+    stored = existing.get("mcpServers", {}).get(MCP_SERVER_NAME, {}).get("env", {}).get("GOOGLE_AI_API_KEY")
+    if stored:
+        return stored
     return _prompt_key("Google AI API key (https://aistudio.google.com/apikey): ")
 
 
